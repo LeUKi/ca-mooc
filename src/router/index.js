@@ -1,26 +1,59 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+import guest from '@/components/guest.vue'
+import index from '@/components/admin/index.vue'
+import login from '@/components/admin/login.vue'
+
+import show from '@/components/show.vue'
+import study from '@/components/study.vue'
+import talk from '@/components/talk.vue'
+
+import ggzs from '@/components/admin/ggzs.vue'
+import hdjl from '@/components/admin/hdjl.vue'
+import xxzy from '@/components/admin/xxzy.vue'
 
 Vue.use(VueRouter)
 
   const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/About.vue')
+    {
+      path: '/g',
+      name: 'guest',
+      component: guest,
+      children: [{
+        path: '/g',
+        component: show
+      }, {
+        path: '/g/study',
+        component: study
+      }, {
+        path: '/g/talk',
+        component: talk
+      }]
+    }, {
+      path: '/admin',
+      name: 'admin',
+      component: index,
+      children: [{
+        path: '/admin',
+        component: ggzs
+      }, {
+        path: '/admin/hdjl',
+        component: hdjl
+      }, {
+        path: '/admin/xxzy',
+        component: xxzy
+      }]
+    }, {
+      path: '/login',
+      name: 'login',
+      component: login
+    }, {
+      path: '*',
+      name: '404',
+      redirect: '/g'
     }
-  }
-]
+  ]
 
 const router = new VueRouter({
   routes
