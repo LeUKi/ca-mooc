@@ -8,7 +8,7 @@
         <div style="margin: 30px;width: 400px;">
             <h2><u>课程公告</u></h2>
             <Collapse simple>
-                <Panel v-for="i in gg" :name="i.index" :key="i.nid">
+                <Panel v-for="i in gg" :name="i.index" :key="i.index">
                     {{ i.notice_title | dUan }} - {{ i.notice_time }}
                     <div slot="content"><h3>{{ i.notice_title }}</h3><p>{{ i.notice_destination }}</p></div>
                 </Panel>

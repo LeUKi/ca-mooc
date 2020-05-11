@@ -118,31 +118,31 @@
                 }],
                 wlk: [{
                     "ocid": 1,
-                    "onlineClass_title": "北京大学-普通物理实验（国家级精品课）",
-                    "onlineClass_destination": "ssss",
-                    "onlineClass_time": "2020-05-01",
-                    "onlineClass_url": "https://www.bilibili.com/video/av66646524/"
+                    "onlineClass_title": "拉取中..",
+                    "onlineClass_destination": "拉取中..",
+                    "onlineClass_time": "0000-00-00",
+                    "onlineClass_url": "/"
                 }],
                 jz: [{
                     "lid": 1,
-                    "lecture_title": " 第1章 电路模型和电路定律",
-                    "lecture_destination": "......",
-                    "lecture_time": "2020-05-01"
+                    "lecture_title": "拉取中..",
+                    "lecture_destination": "拉取中..",
+                    "lecture_time": "0000-00-00"
                 }],
                 kc: [{
                     "cid": 1,
-                    "case_library_title": "lecture_01_电路基本概念",
-                    "case_library_destination": "sgeas",
-                    "case_library_time": "2020-05-01",
-                    "case_library_video": "null",
-                    "case_library_text": "/static1/ppt/lecture_01_电路基本概念.ppt"
+                    "case_library_title": "拉取中..",
+                    "case_library_destination": "拉取中..",
+                    "case_library_time": "0000-00-00",
+                    "case_library_video": "/",
+                    "case_library_text": "/"
                 }],
                 zxpc: [{
                     "oid": 1,
-                    "onlineTest_title": "电路分析试题1",
-                    "onlineTest_destination": "xxxxxxxx",
-                    "onlineTest_time": "2020-05-01",
-                    "onlineTest_url": "/static1/test/电路分析试题1.doc"
+                    "onlineTest_title": "拉取中..",
+                    "onlineTest_destination": "拉取中..",
+                    "onlineTest_time": "0000-00-00",
+                    "onlineTest_url": "/"
                 }]
             }
         },
@@ -190,7 +190,7 @@
             getzxpc() {
                 this.axios.get('http://118.178.125.139:8060/guest/onlineTest/findAll?page=0&size=100')
                     .then(res => {
-                        this.zxpc = res.data.OnlineTests.notices.content
+                        this.zxpc = res.data.extended.OnlineTests.content
                     })
             }
         }
