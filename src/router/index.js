@@ -29,6 +29,10 @@ Vue.use(VueRouter)
       }, {
         path: '/g/talk',
         component: talk
+      },{
+        path: '/login',
+        name: 'login',
+        component: login
       }]
     }, {
       path: '/admin',
@@ -44,11 +48,7 @@ Vue.use(VueRouter)
         path: '/admin/xxzy',
         component: xxzy
       }]
-    }, {
-      path: '/login',
-      name: 'login',
-      component: login
-    }, {
+    },  {
       path: '*',
       name: '404',
       redirect: '/g'

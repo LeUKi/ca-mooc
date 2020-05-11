@@ -91,11 +91,10 @@
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu"
                           size="24"></Icon>
-                    电路分析精品网站
+                    <span style="font-size: large;user-select:none;" >电路分析精品网站</span>
                 </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+                <Content :style="{margin: '20px', background: '#fff', minHeight: '500px'}">
                     <router-view></router-view>
-
                 </Content>
             </Layout>
         </Layout>
