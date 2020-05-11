@@ -1,5 +1,7 @@
 <template>
-<div>公共展示</div>
+<div>
+公共展示管理
+</div>
 </template>
 
 <script>
