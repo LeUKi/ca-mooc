@@ -11,7 +11,6 @@
                 <Panel v-for="i in gg" :name="i.index" :key="i.nid">
                     {{ i.notice_title | dUan }} - {{ i.notice_time }}
                     <div slot="content"><h3>{{ i.notice_title }}</h3><p>{{ i.notice_destination }}</p></div>
-<!--                    <p><h5></h5><br></p>-->
                 </Panel>
             </Collapse>
         </div>
