@@ -104,11 +104,11 @@
         name: "study",
         data() {
             return {
-                v1: "1",
-                v2: "1",
-                v3: "1",
-                v4: "1",
-                v5: "1",
+                v1: "",
+                v2: "",
+                v3: "",
+                v4: "",
+                v5: "",
                 sjjx: [{
                     "pid": 1,
                     "practicalTeach_title": "拉取中..",
