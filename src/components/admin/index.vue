@@ -45,7 +45,7 @@
                                 互动管理
                             </template>
                             <MenuItem name="3-1" to="/admin/wt">问题</MenuItem>
-<!--                            <MenuItem name="3-2" to="/admin/hf">回复</MenuItem>-->
+                            <MenuItem name="3-2" to="/admin/hf">回复</MenuItem>
                         </Submenu>
                     </Menu>
                 </Sider>

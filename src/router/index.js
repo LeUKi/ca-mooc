@@ -19,6 +19,7 @@ import zxcp from '@/components/admin/study/zxcp.vue'
 import kc from '@/components/admin/study/kc.vue'
 
 import wt from '@/components/admin/talk/wt.vue'
+import hf from '@/components/admin/talk/hf.vue'
 
 Vue.use(VueRouter)
 
@@ -71,6 +72,9 @@ const routes = [
             }, {
                 path: '/admin/wt',
                 component: wt
+            }, {
+                path: '/admin/hf',
+                component: hf
             }]
     }, {
         path: '*',

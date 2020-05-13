@@ -26,23 +26,22 @@
                 v-model="modal1"
                 :title="mod.tit"
                 @on-ok="ok">
-            <Input v-model="mod.v1" type="textarea" :autosize="true" placeholder="标题.."/>
+            <Input v-model="mod.v1" type="textarea" :autosize="true" placeholder="问题ID.."/>
             <Input v-model="mod.v2" type="textarea" :autosize="{minRows: 2,maxRows:15}"
-                   placeholder="内容.."/>
-            <input type="file" ref="file">
+                   placeholder="回复.."/>
         </Modal>
     </div>
 </template>
 
 <script>
     export default {
-        name: "zxcp",
+        name: "hf",
         mounted() {
             this.getgg()
         },
         data() {
             return {
-                typeit: '在线测评',
+                typeit: '回复',
                 modal1: false,
                 mod: {
                     tit: "我是标题",
@@ -51,37 +50,29 @@
                     v3: ""
                 },
                 modaltype: 0,//0new,1edit,2del
-                ggT: [
-                    {
-                        title: 'ID',
-                        key: 'oid',
-                        width: 70
-                    },
-                    {
-                        title: '标题',
-                        key: 'onlineTest_title',
-                        minWidth: 100
-                    },
-                    {
-                        title: '内容',
-                        key: 'onlineTest_destination',
-                        minWidth: 300
-                    }, {
-                        title: 'URL',
-                        key: 'onlineTest_url',
-                        minWidth: 300
-                    }, {
-                        title: '时间',
-                        key: 'onlineTest_time',
-                        minWidth: 100
-                    }],
+                ggT: [{
+                    title: 'ID',
+                    key: 'aid',
+                    width: 70
+                }, {
+                    title: '回复内容',
+                    key: 'answer',
+                    minWidth: 300
+                }, {
+                    title: '问题及问题ID',
+                    key: 'q',
+                    minWidth: 100
+                }, {
+                    title: '时间',
+                    key: 'interactionAnswer_time',
+                    minWidth: 100
+                }],
                 ggdata: [
                     {
-                        'oid': 'id拉取中..',
-                        'onlineTest_title': '标题拉取中..',
-                        'onlineTest_destination': '内容拉取中..',
-                        'onlineTest_time': '时间拉取中..',
-                        'onlineTest_url': 'URL拉取中..',
+                        'aid': 'id拉取中..',
+                        'answer': '内容拉取中..',
+                        'practicalTeach_time': '时间拉取中..',
+                        'qid': '问题拉取中..',
                     }],
                 choosen: {}
             }
@@ -104,9 +95,8 @@
                         this.modaltype = 1
                         this.mod = {
                             tit: '编辑' + this.typeit,
-                            v1: this.choosen.onlineTest_title,
-                            v2: this.choosen.onlineTest_destination,
-                            v3: this.choosen.onlineTest_url
+                            v1: this.choosen.qid,
+                            v2: this.choosen.answer,
                         }
                         break
                     }
@@ -116,14 +106,14 @@
             ok() {
                 switch (this.modaltype) {
                     case 0: {
-                        let formData = new FormData();
-                        formData.append('onlineTest_title', this.mod.v1)
-                        formData.append('onlineTest_destination', this.mod.v2)
-                        formData.append('testfile', this.$refs.file.files[0])
-                        this.axios.post('http://118.178.125.139:8060/admin/onlineTest/add', formData,
+                        var data1 = {
+                            'questionId': this.mod.v1,
+                            'answer': this.mod.v2,
+                        }
+                        this.axios.post('http://118.178.125.139:8060/admin/interactionAnswer/add', this.qs.stringify(data1),
                             {
                                 headers: {
-                                    'Content-Type': 'multipart/form-data',
+                                    'Content-Type': 'application/x-www-form-urlencoded',
                                     'token': localStorage.getItem('token')
                                 }
                             }).then(res => {
@@ -133,15 +123,15 @@
                         break
                     }
                     case 1: {
-                        let formData2 = new FormData();
-                        formData2.append('id', this.choosen.oid)
-                        formData2.append('onlineTest_title', this.mod.v1)
-                        formData2.append('onlineTest_destination', this.mod.v2)
-                        formData2.append('testfile', this.$refs.file.files[0])
-                        this.axios.post('http://118.178.125.139:8060/admin/onlineTest/update', formData2,
+                        var data2 = {
+                            'questionId': this.mod.v1,
+                            'answer': this.mod.v2,
+                            'id': this.choosen.aid,
+                        }
+                        this.axios.post('http://118.178.125.139:8060/admin/interactionAnswer/update', this.qs.stringify(data2),
                             {
                                 headers: {
-                                    'Content-Type': 'application/multipart/form-data',
+                                    'Content-Type': 'application/x-www-form-urlencoded',
                                     'token': localStorage.getItem('token')
                                 }
                             }).then(res => {
@@ -154,27 +144,34 @@
             }
             ,
             getgg() {
-                this.axios.get('http://118.178.125.139:8060/admin/onlineTest/findAll?page=0&size=100',
+                this.axios.get('http://118.178.125.139:8060/admin/interactionAnswer/findAll?page=0&size=100',
                     {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                             'token': localStorage.getItem('token')
                         }
                     }).then(res => {
-                    this.ggdata = res.data.extended.OnlineTests.content
+                    for (var i = 0; i < res.data.extended.InteractionAnswers.content.length; i++) {
+                        res.data.extended.InteractionAnswers.content[i].q = "[" +
+                            res.data.extended.InteractionAnswers.content[i].interactionQuestion.qid + "] " +
+                            res.data.extended.InteractionAnswers.content[i].interactionQuestion.interactionQuestion_title
+                        res.data.extended.InteractionAnswers.content[i].qid =
+                            res.data.extended.InteractionAnswers.content[i].interactionQuestion.qid
+                    }
+                    this.ggdata = res.data.extended.InteractionAnswers.content
                     this.$Message.success('加载成功！')
                 })
             }
             ,
             handleContextMenu(row) {
-                const index = this.ggdata.findIndex(item => item.oid === row.oid);
+                const index = this.ggdata.findIndex(item => item.id === row.id);
                 this.choosen = row
                 var i = index + 1
-                this.$Message.info('你选中了第' + i + '行（ID:' + row.oid + '）');
+                this.$Message.info('你选中了第' + i + '行（ID:' + row.id + '）');
             }
             ,
             del() {
-                this.axios.delete('http://118.178.125.139:8060/admin/onlineTest/deleteById?id=' + this.choosen.oid,
+                this.axios.delete('http://118.178.125.139:8060/admin/interactionAnswer/deleteById?id=' + this.choosen.aid,
                     {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',

@@ -164,7 +164,6 @@
                             'token': localStorage.getItem('token')
                         }
                     }).then(res => {
-                    console.log(res)
                     this.ggdata = res.data.extended.PracticalTeachs.content
                     this.$Message.success('加载成功！')
                 })
