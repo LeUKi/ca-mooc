@@ -62,36 +62,28 @@
         <Layout>
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                 <Menu active-name="1-1" theme="dark" width="auto" :class="menuitemClasses">
-                    <router-link to="/">
-                        <MenuItem name="1-1">
-                            <Icon type="ios-navigate"></Icon>
-                            <span>首页</span>
-                        </MenuItem>
-                    </router-link>
-                    <router-link to="/g/study">
-                        <MenuItem name="1-2">
-                            <Icon type="ios-book"/>
-                            <span>学习资源</span></MenuItem>
-                    </router-link>
-                    <router-link to="/g/talk">
-                        <MenuItem name="1-3">
-                            <Icon type="md-chatboxes"/>
-                            <span>互动交流</span>
-                        </MenuItem>
-                    </router-link>
-                    <router-link to="/login">
-                        <MenuItem name="1-4">
-                            <Icon type="ios-settings"></Icon>
-                            <span>后台登入</span>
-                        </MenuItem>
-                    </router-link>
+                    <MenuItem to="/" name="1-1">
+                        <Icon type="ios-navigate"/>
+                        <span>首页</span>
+                    </MenuItem>
+                    <MenuItem to="/g/study" name="1-2">
+                        <Icon type="ios-book"/>
+                        <span>学习资源</span></MenuItem>
+                    <MenuItem to="/g/talk" name="1-3">
+                        <Icon type="md-chatboxes"/>
+                        <span>互动交流</span>
+                    </MenuItem>
+                    <MenuItem to="/login" name="1-4">
+                        <Icon type="ios-settings"></Icon>
+                        <span>后台登入</span>
+                    </MenuItem>
                 </Menu>
             </Sider>
             <Layout>
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu"
                           size="24"></Icon>
-                    <span style="font-size: large;user-select:none;" >电路分析精品网站</span>
+                    <span style="font-size: large;user-select:none;">电路分析精品网站</span>
                 </Header>
                 <Content :style="{margin: '20px', background: '#fff', minHeight: '500px'}">
                     <router-view></router-view>

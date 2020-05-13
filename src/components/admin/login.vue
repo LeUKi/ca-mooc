@@ -38,6 +38,7 @@
                 this.axios.post("http://118.178.125.139:8060/adminLogin", this.qs.stringify(this.logindata))
                     .then(res => {
                         if (res.data.code === 200) {
+                            localStorage.setItem('token',res.data.extended.token)
                             this.$Message.success('登入成功！');
                             this.$router.push("/admin")
                         }

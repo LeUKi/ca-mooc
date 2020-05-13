@@ -4,35 +4,25 @@
             <Sider hide-trigger>
                 <Menu theme="dark" active-name="1">
                     <MenuGroup title="后台管理">
-                        <router-link to="/admin">
-                            <MenuItem name="1">
-                                <Icon type="md-document"/>
-                                首页管理
-                            </MenuItem>
-                        </router-link>
+                        <MenuItem to="/admin" name="1">
+                            <Icon type="ios-navigate"/>
+                            首页管理
+                        </MenuItem>
 
-                        <router-link to="/admin/xxzy">
-                            <MenuItem name="2">
-                                <Icon type="md-chatbubbles"/>
-                                资源管理
-                            </MenuItem>
-                        </router-link>
+                        <MenuItem to="/admin/xxzy" name="2">
+                            <Icon type="ios-book"/>
+                            资源管理
+                        </MenuItem>
 
-                        <router-link to="/admin/hdjl">
-                            <MenuItem name="3">
-                                <Icon type="md-heart"/>
-                                互动管理
-                            </MenuItem>
-                        </router-link>
-
-                        <router-link to="/">
-                            <MenuItem name="4" style="color: red">
-                                <Icon type="md-leaf"/>
-                                退出
-                            </MenuItem>
-
-                        </router-link>
-
+                        <MenuItem to="/admin/hdjl" name="3">
+                            <Icon type="md-chatboxes"/>
+                            互动管理
+                        </MenuItem>
+                        <MenuItem name="4" style="color: red">
+                            <div v-on:click="outadmin">
+                            <Icon type="ios-undo"/>
+                            退出</div>
+                        </MenuItem>
                     </MenuGroup>
                 </Menu>
             </Sider>
@@ -44,8 +34,24 @@
 </template>
 
 <script>
+    import guest from "../guest";
+
     export default {
-        name: "index"
+        name: "index",
+        beforeCreate() {
+            const token = localStorage.getItem('token')
+            if (!token) {
+                this.$Message.error('还未登入！')
+                this.$router.push({name: 'login'})
+            }
+        },
+        methods: {
+            outadmin() {
+                localStorage.clear()
+                this.$Message.success('退出成功！')
+                this.$router.push("/")
+            }
+        }
     }
 </script>
 
