@@ -28,13 +28,23 @@
                     })
             },
             jjchange() {
-                var data1 = {'id': 1, 'introduce_destination': this.jj}
+                var data1 = {
+                    'iid': localStorage.getItem('userid'),
+                    'introduce_destination': this.jj,
+                    'id': 1,
+                    'introduce_title': ' “电路分析”课程简介',
+                }
                 this.axios.post('http://118.178.125.139:8060/admin/introduce/update', this.qs.stringify(data1),
-                    {headers:{'Content-Type': 'application/x-www-form-urlencoded','token':localStorage.getItem('token')}})
-                    .then(res => {
-                        this.getjj()
+                    {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'token': localStorage.getItem('token')
+                        }
+                    }).then(res=>{
                         this.$Message.success('修改成功！')
-                    })
+                })
+
+
             }
 
         }

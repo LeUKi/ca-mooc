@@ -39,6 +39,7 @@
                     .then(res => {
                         if (res.data.code === 200) {
                             localStorage.setItem('token',res.data.extended.token)
+                            localStorage.setItem('userid',res.data.extended.user.id)
                             this.$Message.success('登入成功！');
                             this.$router.push("/admin")
                         }
