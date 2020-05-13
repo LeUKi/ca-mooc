@@ -81,7 +81,7 @@
                         'practicalTeach_title': '标题拉取中..',
                         'practicalTeach_destination': '内容拉取中..',
                         'practicalTeach_time': '时间拉取中..',
-                        'practicalTeach_url': '时间拉取中..',
+                        'practicalTeach_url': 'URL拉取中..',
                     }],
                 choosen: {}
             }
