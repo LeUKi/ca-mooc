@@ -38,7 +38,7 @@
             gett() {
                 this.axios.get('http://118.178.125.139:8060/guest/interactionQuestion/findAll?page=0&size=100')
                     .then(res => {
-                        this.zxpc = res.data.extended.InteractionQuestions.content
+                        this.t = res.data.extended.InteractionQuestions.content
                     })
             }
         }
