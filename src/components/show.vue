@@ -6,11 +6,18 @@
             <h3>{{ jj }}</h3>
         </div>
         <div style="margin: 30px;width: 400px;">
+            <Page @on-change="getgg"
+                  style="float: right"
+                  :current="ggpage.show"
+                  :total="ggpage.all"
+                  simple/>
             <h2><u>课程公告</u></h2>
+
             <Collapse simple>
                 <Panel v-for="i in gg" :name="i.index" :key="i.index">
                     {{ i.notice_title | dUan }} - {{ i.notice_time }}
-                    <div slot="content"><h3>{{ i.notice_title }}</h3><p>{{ i.notice_destination }}</p></div>
+                    <div slot="content"><h3>{{ i.notice_title }}</h3>
+                        <p>{{ i.notice_destination }}</p></div>
                 </Panel>
             </Collapse>
         </div>
@@ -22,6 +29,10 @@
         name: "show",
         data() {
             return {
+                ggpage: {
+                    show: 1,
+                    all: 50,
+                },
                 jj: '简介拉取中..',
                 gg: [{
                     "nid": 0,
@@ -33,14 +44,16 @@
         },
         filters: {
             dUan: function (v) {
-                if(v.length>=15){
-                    return v.slice(0, 15)+"..."
-                }else {return v}
+                if (v.length >= 12) {
+                    return v.slice(0, 12) + "..."
+                } else {
+                    return v
+                }
             }
         },
         mounted() {
             this.getjj()
-            this.getgg()
+            this.getgg(1)
         },
         methods: {
             getjj() {
@@ -49,10 +62,14 @@
                         this.jj = res.data.extended.Introduce.introduce_destination
                     })
             },
-            getgg() {
-                this.axios.get('http://118.178.125.139:8060/guest/notice/findAll?page=0&size=100')
+            getgg(s) {
+                this.ggpage.show = s
+                var ss = s - 1
+                var ggurl = 'http://118.178.125.139:8060/guest/notice/findAll?page=' + ss + '&size=10'
+                this.axios.get(ggurl)
                     .then(res => {
                         this.gg = res.data.extended.notices.content
+                        this.ggpage.all = res.data.extended.notices.totalElements
                     })
             }
         }

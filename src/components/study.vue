@@ -1,6 +1,12 @@
 <template>
     <div class="d" style="user-select:none;">
+
         <div style="margin: 30px;width: 460px;">
+            <Page @on-change="getsjjx"
+                  style="float: right"
+                  :current="page.sjjx.show"
+                  :total="page.sjjx.all"
+                  />
             <h1><u>实践教学</u></h1>
             <Collapse v-model="v1" accordion>
                 <Panel v-for="i in sjjx" :name="i.index" :key="i.index">
@@ -20,6 +26,11 @@
         </div>
 
         <div style="margin: 30px;width: 460px;">
+            <Page @on-change="getwlk"
+                  style="float: right"
+                  :current="page.wlk.show"
+                  :total="page.wlk.all"
+            />
             <h1><u>网络课</u></h1>
             <Collapse v-model="v2" accordion>
                 <Panel v-for="i in wlk" :name="i.index" :key="i.index">
@@ -27,7 +38,7 @@
                     <div slot="content">
                         <a :href="i.onlineClass_url">
                             <Button size="small" style="float: right;">
-                                <Icon type="ios-videocam" />
+                                <Icon type="ios-videocam"/>
                             </Button>
                         </a>
                         <h3> {{ i.onlineClass_title }} </h3>
@@ -39,6 +50,11 @@
         </div>
 
         <div style="margin: 30px;width: 460px;">
+            <Page @on-change="getjz"
+                  style="float: right"
+                  :current="page.jz.show"
+                  :total="page.jz.all"
+            />
             <h1><u>讲座</u></h1>
             <Collapse v-model="v3" accordion>
                 <Panel v-for="i in jz" :name="i.index" :key="i.index">
@@ -53,6 +69,11 @@
         </div>
 
         <div style="margin: 30px;width: 460px;">
+            <Page @on-change="getzxpc"
+                  style="float: right"
+                  :current="page.zxpc.show"
+                  :total="page.zxpc.all"
+            />
             <h1><u>在线测评</u></h1>
             <Collapse v-model="v5" accordion>
                 <Panel v-for="i in zxpc" :name="i.index" :key="i.index">
@@ -60,7 +81,7 @@
                     <div slot="content">
                         <a :href="i.onlineTest_url">
                             <Button size="small" style="float: right;">
-                                <Icon type="md-checkmark-circle-outline" />
+                                <Icon type="md-checkmark-circle-outline"/>
                             </Button>
                         </a>
                         <h3> {{ i.onlineTest_title }} </h3>
@@ -72,6 +93,11 @@
         </div>
 
         <div style="margin: 30px;width: 460px;">
+            <Page @on-change="getkc"
+                  style="float: right"
+                  :current="page.kc.show"
+                  :total="page.kc.all"
+            />
             <h1><u>课程</u></h1>
             <Collapse v-model="v4" accordion>
                 <Panel v-for="i in kc" :name="i.index" :key="i.index">
@@ -79,7 +105,7 @@
                     <div slot="content">
                         <a :href="i.case_library_text">
                             <Button size="small" style="float: right;">
-                                <Icon type="ios-videocam" />
+                                <Icon type="ios-videocam"/>
                             </Button>
                         </a>
                         <a :href="i.case_library_video">
@@ -104,6 +130,28 @@
         name: "study",
         data() {
             return {
+                page: {
+                    sjjx: {
+                        show: 1,
+                        all: 1,
+                    },
+                    wlk: {
+                        show: 1,
+                        all: 1,
+                    },
+                    jz: {
+                        show: 1,
+                        all: 1,
+                    },
+                    kc: {
+                        show: 1,
+                        all: 1,
+                    },
+                    zxpc: {
+                        show: 1,
+                        all: 1,
+                    },
+                },
                 v1: "",
                 v2: "",
                 v3: "",
@@ -156,41 +204,56 @@
             }
         },
         mounted() {
-            this.getsjjx()
-            this.getwlk()
-            this.getjz()
-            this.getkc()
-            this.getzxpc()
+            this.getsjjx(1)
+            this.getwlk(1)
+            this.getjz(1)
+            this.getkc(1)
+            this.getzxpc(1)
         },
         methods: {
-            getsjjx() {
-                this.axios.get('http://118.178.125.139:8060/guest/practicalTeach/findAll?page=0&size=100')
+            getsjjx(s) {
+                this.page.sjjx.show = s
+                var ss = s - 1
+                this.axios.get('http://118.178.125.139:8060/guest/practicalTeach/findAll?page='+ss+'&size=10')
                     .then(res => {
                         this.sjjx = res.data.extended.PracticalTeachs.content
+                        this.page.sjjx.all = res.data.extended.PracticalTeachs.totalElements
                     })
             },
-            getwlk() {
-                this.axios.get('http://118.178.125.139:8060/guest/onlineClass/findAll?page=0&size=100')
+            getwlk(s) {
+                this.page.wlk.show = s
+                var ss = s - 1
+                    this.axios.get('http://118.178.125.139:8060/guest/onlineClass/findAll?page='+ss+'&size=10')
                     .then(res => {
                         this.wlk = res.data.extended.OnlineClasss.content
+                        this.page.wlk.all = res.data.extended.OnlineClasss.totalElements
                     })
             },
-            getjz() {
-                this.axios.get('http://118.178.125.139:8060/guest/lecture/findAll?page=0&size=100')
+            getjz(s) {
+                this.page.jz.show = s
+                var ss = s - 1
+                    this.axios.get('http://118.178.125.139:8060/guest/lecture/findAll?page='+ss+'&size=10')
                     .then(res => {
                         this.jz = res.data.extended.Lectures.content
+                        this.page.jz.all = res.data.extended.Lectures.totalElements
                     })
             },
-            getkc() {
-                this.axios.get('http://118.178.125.139:8060/guest/case/findAll?page=0&size=100')
+            getkc(s) {
+                this.page.kc.show = s
+                var ss = s - 1
+                    this.axios.get('http://118.178.125.139:8060/guest/case/findAll?page='+ss+'&size=10')
                     .then(res => {
                         this.kc = res.data.extended.CaseLibrarys.content
+                        this.page.kc.all = res.data.extended.CaseLibrarys.totalElements
                     })
             },
-            getzxpc() {
-                this.axios.get('http://118.178.125.139:8060/guest/onlineTest/findAll?page=0&size=100')
+            getzxpc(s) {
+                this.page.zxpc.show = s
+                var ss = s - 1
+                    this.axios.get('http://118.178.125.139:8060/guest/onlineTest/findAll?page='+ss+'&size=10')
                     .then(res => {
                         this.zxpc = res.data.extended.OnlineTests.content
+                        this.page.zxpc.all = res.data.extended.OnlineTests.totalElements
                     })
             }
         }

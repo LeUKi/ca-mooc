@@ -1,6 +1,6 @@
 <template>
 <div>
-公共展示管理
+    <p slot="title">123</p>
 </div>
 </template>
 

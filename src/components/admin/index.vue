@@ -20,14 +20,17 @@
                         </MenuItem>
                         <MenuItem name="4" style="color: red">
                             <div v-on:click="outadmin">
-                            <Icon type="ios-undo"/>
-                            退出</div>
+                                <Icon type="ios-undo"/>
+                                退出
+                            </div>
                         </MenuItem>
                     </MenuGroup>
                 </Menu>
             </Sider>
             <Layout class="you">
-                <router-view></router-view>
+                <card style="min-height: 100%">
+                    <router-view></router-view>
+                </card>
             </Layout>
         </Layout>
     </div>
