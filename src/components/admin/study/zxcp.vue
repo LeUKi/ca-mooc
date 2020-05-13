@@ -1,10 +1,10 @@
 <template>
-<div>互动交流</div>
+    
 </template>
 
 <script>
     export default {
-        name: "hdjl"
+        name: "zxcp"
     }
 </script>
 

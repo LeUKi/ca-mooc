@@ -1,6 +1,5 @@
 <template>
     <div class="d" style="user-select:none;">
-
         <div style="margin: 30px;width: 460px;">
             <Page @on-change="getsjjx"
                   style="float: right"
@@ -270,8 +269,7 @@
         justify-content: center;
 
     }
-
-    .ivu-collapse {
+    .ivu-collapse{
         background-color: white;
     }
 </style>
