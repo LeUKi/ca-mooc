@@ -35,7 +35,7 @@
 
 <script>
     export default {
-        name: "gg",
+        name: "jz",
         mounted() {
             this.getgg()
         },
