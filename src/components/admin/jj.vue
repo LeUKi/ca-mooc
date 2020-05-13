@@ -2,7 +2,7 @@
     <div class="d">
         <card style="width: 800px">
 
-            <p slot="title">简介</p>
+            <p slot="title">课程简介</p>
             <Input v-model="jj" type="textarea" :autosize="{minRows: 8}" placeholder="Enter something..."/>
             <Button @click="jjchange" type="primary" style="float: right;margin:17px ">修改</Button>
         </card>
@@ -25,7 +25,9 @@
                 this.axios.get('http://118.178.125.139:8060/guest/introduce/find')
                     .then(res => {
                         this.jj = res.data.extended.Introduce.introduce_destination
-                    })
+                    }).then(res=>{
+                    this.$Message.success('加载成功！')
+                })
             },
             jjchange() {
                 var data1 = {
