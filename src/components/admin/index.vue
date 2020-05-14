@@ -41,7 +41,7 @@
                         </Submenu>
                         <Submenu name="3">
                             <template slot="title">
-                                <Icon type="ios-settings"/>
+                                <Icon type="md-chatboxes"/>
                                 互动管理
                             </template>
                             <MenuItem name="3-1" to="/admin/wt">问题</MenuItem>

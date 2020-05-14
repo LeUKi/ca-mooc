@@ -21,7 +21,13 @@
                 <DropdownItem @click.native="del" style="color: #ed4014">删除</DropdownItem>
             </template>
         </Table>
-
+        <Page :total="page.all"
+              show-elevator
+              show-total
+              page-size="8"
+              @on-change="getgg"
+              style="text-align: center;margin-top: 10px"
+        />
         <Modal
                 v-model="modal1"
                 :title="mod.tit"
@@ -37,11 +43,15 @@
     export default {
         name: "gg",
         mounted() {
-            this.getgg()
+            this.getgg(1)
         },
         data() {
             return {
-                typeit:'公告',
+                page: {
+                    show: '1',
+                    all: '50'
+                },
+                typeit: '公告',
                 modal1: false,
                 mod: {
                     tit: "我是标题",
@@ -85,7 +95,7 @@
                 switch (ss) {
                     case 0: {
                         this.mod = {
-                            tit: '新建'+this.typeit,
+                            tit: '新建' + this.typeit,
                             v1: '',
                             v2: ''
                         }
@@ -95,7 +105,7 @@
                     case 1: {
                         this.modaltype = 1
                         this.mod = {
-                            tit: '编辑'+this.typeit,
+                            tit: '编辑' + this.typeit,
                             v1: this.choosen.notice_title,
                             v2: this.choosen.notice_destination
                         }
@@ -119,7 +129,7 @@
                                 }
                             }).then(res => {
                             this.$Message.success('新建成功！')
-                            this.getgg()
+                            this.getgg(this.page.show)
                         })
                         break
                     }
@@ -138,15 +148,17 @@
                                 }
                             }).then(res => {
                             this.$Message.success('修改成功！')
-                            this.getgg()
+                            this.getgg(this.page.show)
                         })
                         break
                     }
                 }
             }
             ,
-            getgg() {
-                this.axios.get('http://118.178.125.139:8060/admin/notice/findAll?page=0&size=100',
+            getgg(s) {
+                this.page.show = s
+                var ss = s - 1
+                this.axios.get('http://118.178.125.139:8060/admin/notice/findAll?page='+ss+'&size=8',
                     {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -154,6 +166,7 @@
                         }
                     }).then(res => {
                     this.ggdata = res.data.extended.notices.content
+                    this.page.all = res.data.extended.notices.totalElements
                     this.$Message.success('加载成功！')
                 })
             }
@@ -166,7 +179,7 @@
             }
             ,
             del() {
-                this.axios.delete('http://118.178.125.139:8060/admin/notice/deleteById?id='+this.choosen.nid,
+                this.axios.delete('http://118.178.125.139:8060/admin/notice/deleteById?id=' + this.choosen.nid,
                     {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -174,7 +187,7 @@
                         }
                     }).then(res => {
                     this.$Message.success('删除成功！')
-                    this.getgg()
+                    this.getgg(this.page.show)
                 })
             }
         }

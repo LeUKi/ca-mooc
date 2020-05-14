@@ -21,7 +21,13 @@
                 <DropdownItem @click.native="del" style="color: #ed4014">删除</DropdownItem>
             </template>
         </Table>
-
+        <Page :total="page.all"
+              show-elevator
+              show-total
+              page-size="8"
+              @on-change="getgg"
+              style="text-align: center;margin-top: 10px"
+        />
         <Modal
                 v-model="modal1"
                 :title="mod.tit"
@@ -38,10 +44,14 @@
     export default {
         name: "sjjx",
         mounted() {
-            this.getgg()
+            this.getgg(1)
         },
         data() {
             return {
+                page: {
+                    show: '1',
+                    all: '50'
+                },
                 typeit: '实践教学',
                 modal1: false,
                 mod: {
@@ -129,7 +139,7 @@
                                 }
                             }).then(res => {
                             this.$Message.success('新建成功！')
-                            this.getgg()
+                            this.getgg(this.page.show)
                         })
                         break
                     }
@@ -149,15 +159,17 @@
                                 }
                             }).then(res => {
                             this.$Message.success('修改成功！')
-                            this.getgg()
+                            this.getgg(this.page.show)
                         })
                         break
                     }
                 }
             }
             ,
-            getgg() {
-                this.axios.get('http://118.178.125.139:8060/admin/practicalTeach/findAll?page=0&size=100',
+            getgg(s) {
+                this.page.show = s
+                var ss = s - 1
+                this.axios.get('http://118.178.125.139:8060/admin/practicalTeach/findAll?page=' + ss + '&size=8',
                     {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -165,6 +177,7 @@
                         }
                     }).then(res => {
                     this.ggdata = res.data.extended.PracticalTeachs.content
+                    this.page.all = res.data.extended.PracticalTeachs.totalElements
                     this.$Message.success('加载成功！')
                 })
             }
@@ -185,7 +198,7 @@
                         }
                     }).then(res => {
                     this.$Message.success('删除成功！')
-                    this.getgg()
+                    this.getgg(this.page.show)
                 })
             }
         }
